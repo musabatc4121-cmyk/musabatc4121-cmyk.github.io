@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C1ph3r Web Site</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #000; 
+            color: #00ff00; 
+            font-family: monospace; 
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 40px;
+            text-align: center;
+        }
+        h1 { 
+            font-size: 32px; 
+            text-shadow: 0 0 15px #00ff00; 
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            background-color: #00ff00;
+            margin-left: 5px;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        .box {
+            background-color: rgba(17, 17, 17, 0.85);
+            border: 1px solid #00ff00;
+            padding: 20px;
+            width: 85%;
+            max-width: 500px;
+            margin: 15px auto;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        p { font-size: 16px; color: #ffffff; }
+        .btn {
+            display: inline-block;
+            background-color: #00ff00;
+            color: #000;
+            padding: 8px 16px;
+            margin: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #000;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        /* SANAL TERMINAL STİLLERİ */
+        .terminal-box {
+            background-color: rgba(10, 10, 10, 0.9);
+            border: 1px solid #00ff00;
+            width: 85%;
+            max-width: 500px;
+            margin: 20px auto;
+            border-radius: 5px;
+            text-align: left;
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.4);
+        }
+        .terminal-header {
+            background-color: #222;
+            padding: 5px 10px;
+            border-bottom: 1px solid #00ff00;
+            font-size: 12px;
+            color: #aaa;
+            display: flex;
+            justify-content: space-between;
+        }
+        .terminal-body {
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+        .terminal-output {
+            white-space: pre-wrap;
+            margin-bottom: 10px;
+        }
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+        }
+        .terminal-prompt {
+            color: #00ff00;
+            margin-right: 5px;
+        }
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: monospace;
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="container">
+        <h1 id="typing-text"></h1><span class="cursor">&nbsp;</span>
+        
+        <div class="box">
+            <h3>[ SYSTEM OVERVIEW ]</h3>
+            <p>Termux ve GitHub kullanılarak siber dünyada ilk adımlar atıldı. Bu web sitesi tamamen açık kaynaklı olarak barındırılmaktadır.</p>
+        </div>
+
+        <!-- SANAL TERMİNAL HTML ALANI -->
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <span>c1ph3r@termux:~</span>
+                <span>● ✖ ➖</span>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="terminal-output" id="terminal-output">C1ph3r OS [Version 1.0.0]
+Komut listesi için 'help' yazın.</div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">$</span>
+                    <input type="text" class="terminal-input" id="terminal-input" autofocus autocomplete="off" autofocus>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>[ BAĞLANTILAR ]</h3>
+            <!-- Buraya kendi linklerini tekrar eklemeyi unutma -->
+            <a href="#" class="btn" target="_blank">Instagram</a>
+            <a href="#" class="btn" target="_blank">Discord Server</a>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Efekti
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const alphabet = katakana.split('');
+        const fontSize = 16; const columns = canvas.width / fontSize;
+        const rainDrops = [];
+        for( let x = 0; x < columns; x++ ) { rainDrops[x] = 1; }
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0F0'; ctx.font = fontSize + 'px monospace';
+            for(let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+                if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){ rainDrops[i] = 0; }
+                rainDrops[i]++;
+            }
+        };
+        setInterval(draw, 30);
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+        // Yazı Efekti
+        const textToType = "C1ph3r Siber Dünyaya Hoş Geldiniz!...";
+        let index = 0; const typingSpeed = 100;
+        function typeEffect() {
+            if (index < textToType.length) {
+                document.getElementById("typing-text").innerHTML += textToType.charAt(index);
+                index++; setTimeout(typeEffect, typingSpeed);
+            }
+        }
+        window.onload = typeEffect;
+
+        // SANAL TERMİNAL JAVASCRIPT KODLARI
+        const terminalInput = document.getElementById('terminal-input');
+        const terminalOutput = document.getElementById('terminal-output');
+        const terminalBody = document.getElementById('terminal-body');
+
+        terminalInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const input = terminalInput.value.trim().toLowerCase();
+                let output = '';
+
+                if (input === 'help') {
+                    output = 'Kullanılabilir komutlar:\n- help: Komutları listeler\n- about: Sitenin sahibini gösterir\n- clear: Ekranı temizler\n- hack: Eğlenceli bir siber işlem başlatır';
+                } else if (input === 'about') {
+                    output = 'Bu sistem C1ph3r tarafından yönetilmektedir. Termux altyapısı kullanılarak siber uzayda geliştirilmiştir.';
+                } else if (input === 'clear') {
+                    terminalOutput.innerHTML = '';
+                    terminalInput.value = '';
+                    return;
+                } else if (input === 'hack') {
+                    output = 'Bağlantı kuruluyor...\n[■■■■■■■■■■] %100\nErişim sağlandı! Şaka şaka, sistem güvende. ;)';
+                } else if (input === '') {
+                    output = '';
+                } else {
+                    output = `Hata: '${input}' komutu bulunamadı.`;
+                }
+
+                terminalOutput.innerHTML += `\n\n$ ${terminalInput.value}\n${output}`;
+                terminalInput.value = '';
+                terminalBody.scrollTop = terminalBody.scrollHeight; // Otomatik aşağı kaydırır
+            }
+        });
+    </script>
+</body>
+  </html>
+  
