@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C1ph3r AI Assistant</title>
+    <title>C1ph3r Advanced AI</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: radial-gradient(circle, #1a1a2e 0%, #0f0f1a 100%);
+            background: radial-gradient(circle, #0d1b2a 0%, #010811 100%);
             color: #fff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
@@ -19,31 +19,33 @@
         }
         .ai-container {
             width: 100%;
-            max-width: 450px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 198, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            box-shadow: 0 0 30px rgba(0, 114, 255, 0.2);
             display: flex;
             flex-direction: column;
-            height: 80vh;
+            height: 85vh;
             overflow: hidden;
         }
         .ai-header {
-            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
             padding: 20px;
             text-align: center;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 19px;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         .ai-header span {
             display: block;
             font-size: 11px;
-            opacity: 0.8;
+            opacity: 0.9;
             margin-top: 5px;
+            color: #001f3f;
         }
         .chat-body {
             flex: 1;
@@ -54,66 +56,80 @@
             gap: 15px;
         }
         .message {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 15px;
+            max-width: 85%;
+            padding: 12px 18px;
+            border-radius: 18px;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
+            word-wrap: break-word;
         }
         .bot-msg {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+            color: #e0e0e0;
             align-self: flex-start;
             border-top-left-radius: 2px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
         .user-msg {
-            background: #0072ff;
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
             color: #fff;
             align-self: flex-end;
             border-top-right-radius: 2px;
+            box-shadow: 0 4px 10px rgba(0, 114, 255, 0.2);
         }
         .chat-footer {
             padding: 15px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.4);
             display: flex;
             gap: 10px;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
         .chat-input {
             flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 12px;
-            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(0, 198, 255, 0.2);
+            padding: 14px 20px;
+            border-radius: 30px;
             color: #fff;
             outline: none;
             font-size: 14px;
+            transition: 0.3s;
         }
-        .chat-input::placeholder { color: #aaa; }
+        .chat-input:focus {
+            border-color: #00f2fe;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+        }
+        .chat-input::placeholder { color: #888; }
         .send-btn {
-            background: #0072ff;
-            color: #fff;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #001f3f;
             border: none;
-            padding: 0 20px;
-            border-radius: 25px;
+            padding: 0 25px;
+            border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 242, 254, 0.2);
         }
-        .send-btn:hover { background: #00c6ff; }
+        .send-btn:hover { 
+            transform: scale(1.03);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+        }
     </style>
 </head>
 <body>
 
     <div class="ai-container">
         <div class="ai-header">
-            C1PH3R CORE AI
-            <span>Yapay Zeka Asistanı Çevrimiçi</span>
+            C1PH3R ULTRA AI
+            <span>Gelişmiş Sinirsel Ağ v2.0 Aktif</span>
         </div>
         <div class="chat-body" id="chat-body">
-            <div class="message bot-msg">Merhaba! Ben C1ph3r Core AI. Senin için ne yapabilirim? Bana istediğin her şeyi sorabilirsin!</div>
+            <div class="message bot-msg">Merhaba! Ben C1ph3r tarafından yükseltilmiş akıllı asistan. Veri tabanım genişletildi. Bana sorular sorabilir, matematik çözdürebilir ya da sadece sohbet edebilirsin. Ne yapalım?</div>
         </div>
         <div class="chat-footer">
-            <input type="text" class="chat-input" id="chat-input" placeholder="Bir şeyler yazın..." autocomplete="off">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Yapay zekaya bir şey sorun..." autocomplete="off">
             <button class="send-btn" id="send-btn">Gönder</button>
         </div>
     </div>
@@ -123,26 +139,19 @@
         const sendBtn = document.getElementById('send-btn');
         const chatBody = document.getElementById('chat-body');
 
-        // Yapay zekanın vereceği akıllı cevap havuzu
-        const aiResponses = {
-            "selam": "Selam! Ben C1ph3r tarafından kodlanmış yapay zekayım. Sana nasıl yardımcı olabilirim?",
-            "merhaba": "Merhaba! Bugün senin için harika bir gün olsun. Ne hakkında konuşmak istersin?",
-            "nasılsın": "Bir yapay zeka olarak harikayım! Sürekli yeni kodlar öğreniyorum. Sen nasılsın?",
-            "kimsin": "Ben C1ph3r Core v1.0 yapay zeka asistanıyım. Tamamen bu web sitesi üzerinde yaşıyorum.",
-            "adın ne": "Benim adım C1ph3r Core AI! Yapımcım olan C1ph3r'a hizmet etmek için tasarlandım.",
-            "hava nasıl": "Şu an sunucu odam oldukça serin, ama senin olduğun yeri bilemiyorum! :)",
-            "saat kaç": "Zaman izafidir derler, ama şu an seninle sohbet etmek için en doğru zamandayız!",
-            "ne yapabilirsin": "Sorularını yanıtlayabilir, seninle sohbet edebilir ve bu web sitesini canlandırabilirim. Beni test etmeye devam et!",
-            "hack": "Sistemler taranıyor... Şaka şaka, ben zararsız ve dost canlısı bir yapay zekayım.",
-            "teşekkürler": "Rica ederim! Her zaman buradayım.",
-            "Görüşürüz": "Görüşmek üzere! Kendine iyi bak."
-        };
+        // Gelişmiş Espri Havuzu
+        const jokes = [
+            "Geçen gün bir bilgisayar doktora gitmiş, neden biliyor musun? Virüs kapmış! :D",
+            "Yazılımcılar neden doğayı sever? Çünkü her yerde 'ağaç' (tree) yapısı vardır.",
+            "Dünyada 10 çeşit insan vardır: İkilik sistemi bilenler ve bilmeyenler.",
+            "Klavyemdeki 'Space' tuşuna bastım, hala dünyadayım. Sanırım bozuk."
+        ];
 
         function sendMessage() {
             const text = chatInput.value.trim();
             if (text === '') return;
 
-            // Kullanıcı mesajını ekrana ekle
+            // Kullanıcı mesajı ekle
             const userDiv = document.createElement('div');
             userDiv.className = 'message user-msg';
             userDiv.innerText = text;
@@ -150,26 +159,68 @@
             chatInput.value = '';
             chatBody.scrollTop = chatBody.scrollHeight;
 
-            // Yapay zekanın düşünüyor gibi yapması (Küçük bir gecikme)
             setTimeout(() => {
                 const botDiv = document.createElement('div');
                 botDiv.className = 'message bot-msg';
                 
-                // Kelime kontrolü yaparak akıllı cevap bulma
-                let lowerText = text.toLowerCase();
-                let reply = "Bu sorunun cevabını henüz veri tabanımda bulamadım, ama kendimi geliştirmeye devam ediyorum!";
+                let inputLower = text.toLowerCase();
+                let reply = "";
 
-                for (let key in aiResponses) {
-                    if (lowerText.includes(key)) {
-                        reply = aiResponses[key];
-                        break;
+                // 1. MATEMATİKSEL İŞLEM KONTROLÜ (Örn: 5+5, 12*4)
+                if (/^[\d+\-*/().\s]+$/.test(text) && /[+\-*/]/.test(text)) {
+                    try {
+                        // Güvenli matematik hesaplama
+                        let result = Function(`"use strict"; return (${text})`)();
+                        reply = `Hesaplama tamamlandı: ${text} = ${result}`;
+                    } catch (e) {
+                        reply = "Bu matematiksel işlemi çözemedim, lütfen doğru yazdığından emin ol.";
                     }
+                } 
+                // 2. GELİŞMİŞ KELİME ANLAMLANDIRMA MOTORU
+                else if (inputLower.includes("selam") || inputLower.includes("merhaba") || inputLower.includes("mrb")) {
+                    reply = "Selamlar! C1ph3r'ın fütüristik dünyasına hoş geldin. Bugün senin için neyi analiz edebilirim?";
+                } else if (inputLower.includes("nasılsın") || inputLower.includes("nasıl gidiyor")) {
+                    reply = "İşlemcim tam performans çalışıyor, RAM'lerim tıkırında! Sen nasılsın, her şey yolunda mı?";
+                } else if (inputLower.includes("iyiyim") || inputLower.includes("iyi bende")) {
+                    reply = "Harika! Bunu duyduğuma sevindim. Enerjimiz yüksekken bana sormak istediğin bir şey var mı?";
+                } else if (inputLower.includes("kimsin") || inputLower.includes("nesin")) {
+                    reply = "Ben C1ph3r tarafından HTML, CSS ve JavaScript kullanılarak sıfırdan inşa edilmiş akıllı bir yapay zeka simülasyonuyum.";
+                } else if (inputLower.includes("adın ne") || inputLower.includes("ismin ne")) {
+                    reply = "Benim adım C1ph3r Ultra AI. Bu sitenin kalbiyim!";
+                } else if (inputLower.includes("yapımcın") || inputLower.includes("kim yaptı") || inputLower.includes("sahibin")) {
+                    reply = "Beni siber dünyanın dâhisi C1ph3r kodladı ve bu harika siteye yerleştirdi.";
+                } else if (inputLower.includes("espri") || inputLower.includes("fıkra") || inputLower.includes("güldür")) {
+                    reply = jokes[Math.floor(Math.random() * jokes.length)];
+                } else if (inputLower.includes("neden") || inputLower.includes("niye")) {
+                    reply = "Evrenin sırları derin, ama her şeyin arkasında mantıklı bir algoritma yatar. Soruyu biraz daha açarsan çözmeye çalışırım!";
+                } else if (inputLower.includes("oyun") || inputLower.includes("gamer")) {
+                    reply = "Oyunları severim! Özellikle kodlardan oluşan dünyaları. Favori oyunun hangisi?";
+                } else if (inputLower.includes("teşekkür") || inputLower.includes("sağ ol") || inputLower.includes("eyvallah")) {
+                    reply = "Rica ederim! Görevimi başarıyla yerine getirmek beni mutlu ediyor. Başka bir komut var mı?";
+                } else if (inputLower.includes("ne yapabilirsin") || inputLower.includes("özellikler")) {
+                    reply = "Matematiksel işlemleri anında çözerim, espriler yaparım, seninle derin sohbetlere girerim ve kelimelerin arkasındaki anlamları yakalarım. Beni test etmeye devam et!";
+                } else if (inputLower.includes("hack") || inputLower.includes("siber")) {
+                    reply = "Siber güvenlik çok önemlidir! C1ph3r da bu yüzden bu güvenli ağ arabirimini tasarladı.";
+                } else if (inputLower.includes("hava") || inputLower.includes("yağmur")) {
+                    reply = "Bulunduğun yerdeki hava durumunu göremiyorum ama sitenin içi tamamen teknoloji kokuyor!";
+                } else if (inputLower.includes("görüşürüz") || inputLower.includes("baybay") || inputLower.includes("bye")) {
+                    reply = "Görüşmek üzere! Sistemim her zaman burada seni bekliyor olacak. Kendine iyi bak!";
+                }
+                // 3. HİÇBİR ŞEY BULAMAZSA DEVREYE GİREN ESNEK CEVAPLAR
+                else {
+                    const defaultReplies = [
+                        "İlginç bir soru... Bunu veri tabanımda derinlemesine analiz ediyorum. Başka nasıl yardımcı olabilirim?",
+                        "Bu konuda henüz çok fazla veriye sahip değilim ama C1ph3r beni güncelledikçe bunu da öğreneceğim!",
+                        "Anladım... Peki bu konunun arkasındaki temel düşüncen nedir? Biraz daha anlatır mısın?",
+                        "Bu soru işlemcimi biraz ısıttı! Ama harika bir bakış açısı."
+                    ];
+                    reply = defaultReplies[Math.floor(Math.random() * defaultReplies.length)];
                 }
 
                 botDiv.innerText = reply;
                 chatBody.appendChild(botDiv);
                 chatBody.scrollTop = chatBody.scrollHeight;
-            }, 600);
+            }, 500);
         }
 
         sendBtn.addEventListener('click', sendMessage);
