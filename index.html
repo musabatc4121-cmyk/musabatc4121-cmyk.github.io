@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C1ph3r AI Assistant</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: radial-gradient(circle, #1a1a2e 0%, #0f0f1a 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .ai-container {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            overflow: hidden;
+        }
+        .ai-header {
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+        }
+        .ai-header span {
+            display: block;
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .bot-msg {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            align-self: flex-start;
+            border-top-left-radius: 2px;
+        }
+        .user-msg {
+            background: #0072ff;
+            color: #fff;
+            align-self: flex-end;
+            border-top-right-radius: 2px;
+        }
+        .chat-footer {
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 25px;
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+        }
+        .chat-input::placeholder { color: #aaa; }
+        .send-btn {
+            background: #0072ff;
+            color: #fff;
+            border: none;
+            padding: 0 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .send-btn:hover { background: #00c6ff; }
+    </style>
+</head>
+<body>
+
+    <div class="ai-container">
+        <div class="ai-header">
+            C1PH3R CORE AI
+            <span>Yapay Zeka Asistanı Çevrimiçi</span>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="message bot-msg">Merhaba! Ben C1ph3r Core AI. Senin için ne yapabilirim? Bana istediğin her şeyi sorabilirsin!</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Bir şeyler yazın..." autocomplete="off">
+            <button class="send-btn" id="send-btn">Gönder</button>
+        </div>
+    </div>
+
+    <script>
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const chatBody = document.getElementById('chat-body');
+
+        // Yapay zekanın vereceği akıllı cevap havuzu
+        const aiResponses = {
+            "selam": "Selam! Ben C1ph3r tarafından kodlanmış yapay zekayım. Sana nasıl yardımcı olabilirim?",
+            "merhaba": "Merhaba! Bugün senin için harika bir gün olsun. Ne hakkında konuşmak istersin?",
+            "nasılsın": "Bir yapay zeka olarak harikayım! Sürekli yeni kodlar öğreniyorum. Sen nasılsın?",
+            "kimsin": "Ben C1ph3r Core v1.0 yapay zeka asistanıyım. Tamamen bu web sitesi üzerinde yaşıyorum.",
+            "adın ne": "Benim adım C1ph3r Core AI! Yapımcım olan C1ph3r'a hizmet etmek için tasarlandım.",
+            "hava nasıl": "Şu an sunucu odam oldukça serin, ama senin olduğun yeri bilemiyorum! :)",
+            "saat kaç": "Zaman izafidir derler, ama şu an seninle sohbet etmek için en doğru zamandayız!",
+            "ne yapabilirsin": "Sorularını yanıtlayabilir, seninle sohbet edebilir ve bu web sitesini canlandırabilirim. Beni test etmeye devam et!",
+            "hack": "Sistemler taranıyor... Şaka şaka, ben zararsız ve dost canlısı bir yapay zekayım.",
+            "teşekkürler": "Rica ederim! Her zaman buradayım.",
+            "Görüşürüz": "Görüşmek üzere! Kendine iyi bak."
+        };
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (text === '') return;
+
+            // Kullanıcı mesajını ekrana ekle
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user-msg';
+            userDiv.innerText = text;
+            chatBody.appendChild(userDiv);
+            chatInput.value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Yapay zekanın düşünüyor gibi yapması (Küçük bir gecikme)
+            setTimeout(() => {
+                const botDiv = document.createElement('div');
+                botDiv.className = 'message bot-msg';
+                
+                // Kelime kontrolü yaparak akıllı cevap bulma
+                let lowerText = text.toLowerCase();
+                let reply = "Bu sorunun cevabını henüz veri tabanımda bulamadım, ama kendimi geliştirmeye devam ediyorum!";
+
+                for (let key in aiResponses) {
+                    if (lowerText.includes(key)) {
+                        reply = aiResponses[key];
+                        break;
+                    }
+                }
+
+                botDiv.innerText = reply;
+                chatBody.appendChild(botDiv);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 600);
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
