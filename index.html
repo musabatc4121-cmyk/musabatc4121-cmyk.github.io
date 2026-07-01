@@ -1,31 +1,52 @@
-<!DOCTYPE TYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="tr">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C1ph3r Web Site</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background-color: #111; 
+            background-color: #000; 
             color: #00ff00; 
-            text-align: center; 
             font-family: monospace; 
-            padding-top: 50px; 
+            overflow-x: hidden;
         }
-        h1 { font-size: 40px; text-shadow: 0 0 10px #00ff00; }
-        p { font-size: 20px; color: #ffffff; }
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            padding-top: 50px;
+            text-align: center;
+        }
+        h1 { 
+            font-size: 40px; 
+            text-shadow: 0 0 15px #00ff00; 
+            margin-bottom: 20px;
+        }
         .box {
-            background-color: #222;
+            background-color: rgba(17, 17, 17, 0.85);
             border: 1px solid #00ff00;
             padding: 20px;
-            width: 80%;
+            width: 85%;
             max-width: 500px;
             margin: 20px auto;
             border-radius: 5px;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            backdrop-filter: blur(5px);
         }
+        p { font-size: 18px; color: #ffffff; }
         .btn {
             display: inline-block;
             background-color: #00ff00;
-            color: #111;
+            color: #000;
             padding: 10px 20px;
             margin: 10px;
             text-decoration: none;
@@ -34,28 +55,75 @@
             transition: 0.3s;
         }
         .btn:hover {
-            background-color: #111;
+            background-color: #000;
             color: #00ff00;
             border: 1px solid #00ff00;
-            box-shadow: 0 0 10px #00ff00;
+            box-shadow: 0 0 15px #00ff00;
         }
     </style>
 </head>
 <body>
 
-    <h1>C1ph3r Siber Dünyaya Hoş Geldiniz!</h1>
-    
-    <div class="box">
-        <h3>[ SYSTEM OVERVIEW ]</h3>
-        <p>Termux ve GitHub kullanılarak siber dünyada ilk adımlar atıldı. Bu web sitesi tamamen açık kaynaklı olarak barındırılmaktadır.</p>
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="container">
+        <h1>C1ph3r Siber Dünyaya Hoş Geldiniz!</h1>
+        
+        <div class="box">
+            <h3>[ SYSTEM OVERVIEW ]</h3>
+            <p>Termux ve GitHub kullanılarak siber dünyada ilk adımlar atıldı. Bu web sitesi tamamen açık kaynaklı olarak barındırılmaktadır.</p>
+        </div>
+
+        <div class="box">
+            <h3>[ BAĞLANTILAR ]</h3>
+            <a href="#" class="btn" target="_blank">Instagram</a>
+            <a href="#" class="btn" target="_blank">Discord Server</a>
+        </div>
     </div>
 
-    <div class="box">
-        <h3>[ BAĞLANTILAR ]</h3>
-        <!-- Aşağıdaki # işaretlerini kendi profil linklerinle değiştirebilirsin -->
-        <a href="#" class="btn" target="_blank">Instagram</a>
-        <a href="#" class="btn" target="_blank">Discord Server</a>
-    </div>
+    <script>
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
 
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const alphabet = katakana.split('');
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops = [];
+
+        for( let x = 0; x < columns; x++ ) {
+            rainDrops[x] = 1;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+
+                if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 30);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 </html>
