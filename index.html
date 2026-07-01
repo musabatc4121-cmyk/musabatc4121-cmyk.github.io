@@ -1,15 +1,61 @@
-<!DOCTYPE html>
+<!DOCTYPE TYPE html>
 <html>
 <head>
     <title>C1ph3r Web Site</title>
     <style>
-        body { background-color: #111; color: #00ff00; text-align: center; font-family: monospace; padding-top: 50px; }
-        h1 { font-size: 40px; }
+        body { 
+            background-color: #111; 
+            color: #00ff00; 
+            text-align: center; 
+            font-family: monospace; 
+            padding-top: 50px; 
+        }
+        h1 { font-size: 40px; text-shadow: 0 0 10px #00ff00; }
         p { font-size: 20px; color: #ffffff; }
+        .box {
+            background-color: #222;
+            border: 1px solid #00ff00;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            margin: 20px auto;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+        }
+        .btn {
+            display: inline-block;
+            background-color: #00ff00;
+            color: #111;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #111;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
     </style>
 </head>
 <body>
-    <h1>C1ph3r Siber Dunyaya Hos Geldiniz!</h1>
-    <p>Bu web sitesi Termux uzerinde yerel olarak barindirilmaktadir.</p>
+
+    <h1>C1ph3r Siber Dünyaya Hoş Geldiniz!</h1>
+    
+    <div class="box">
+        <h3>[ SYSTEM OVERVIEW ]</h3>
+        <p>Termux ve GitHub kullanılarak siber dünyada ilk adımlar atıldı. Bu web sitesi tamamen açık kaynaklı olarak barındırılmaktadır.</p>
+    </div>
+
+    <div class="box">
+        <h3>[ BAĞLANTILAR ]</h3>
+        <!-- Aşağıdaki # işaretlerini kendi profil linklerinle değiştirebilirsin -->
+        <a href="#" class="btn" target="_blank">Instagram</a>
+        <a href="#" class="btn" target="_blank">Discord Server</a>
+    </div>
+
 </body>
 </html>
